@@ -4,179 +4,197 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MISSÃO: ANIVERSÁRIO - GTA V</title>
-    
     <style>
-        /* Importando fonte estilo jogo */
         @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body {
-            margin: 0;
-            padding: 0;
-            /* Background com imagem temática (substitua pela sua se desejar) */
-            background: url('https://images.alphacoders.com/439/439539.jpg') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Oswald', sans-serif;
+            background-color: #000;
             color: white;
+            font-family: 'Oswald', sans-serif;
             overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Seção 1: Capa / Loading Screen */
+        .section-hero {
+            height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-        }
-
-        /* Camada escura para dar leitura */
-        .overlay {
-            background: rgba(0, 0, 0, 0.7);
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
-
-        .container {
-            position: relative;
-            z-index: 2;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.alphacoders.com/439/439539.jpg') no-repeat center center;
+            background-size: cover;
             text-align: center;
-            width: 90%;
-            max-width: 600px;
-            padding: 20px;
         }
 
-        /* Título Estilo GTA */
         .logo-gta {
-            font-size: 3.5rem;
+            font-size: 4rem;
             text-transform: uppercase;
-            margin-bottom: 0;
-            line-height: 1;
-            filter: drop-shadow(3px 3px 0px #000);
+            filter: drop-shadow(4px 4px 0px #000);
+            animation: pulse 2s infinite;
         }
 
-        .logo-gta span {
-            color: #5cb85c; /* Verde clássico do dinheiro/GTA */
-        }
+        .logo-gta span { color: #5cb85c; }
 
-        .mission-title {
+        .scroll-indicator {
+            position: absolute;
+            bottom: 20px;
+            font-size: 1.2rem;
             color: #f1c40f;
-            font-size: 1.5rem;
-            margin-top: 5px;
-            letter-spacing: 2px;
+            animation: bounce 2s infinite;
         }
 
-        /* Personagem Sidney Animado */
-        .character-section {
-            margin: 30px 0;
-            height: 150px;
+        /* Seção 2: Personagens e Airsoft */
+        .section-characters {
+            min-height: 100vh;
+            padding: 50px 20px;
+            background: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-top: 5px solid #5cb85c;
+            border-bottom: 5px solid #5cb85c;
+        }
+
+        .airsoft-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .char-card {
+            width: 250px;
+            text-align: center;
+            background: #000;
+            padding: 10px;
+            border: 2px solid #333;
+        }
+
+        .char-card img { width: 100%; border-radius: 4px; }
+
+        /* Animação do Sidney */
+        .sidney-container {
+            width: 100%;
+            height: 200px;
             position: relative;
+            overflow: hidden;
+            margin-top: 40px;
         }
 
         .sidney-walk {
-            width: 120px;
+            width: 150px;
             position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            /* Animação de movimento lateral leve */
-            animation: moveSidney 4s ease-in-out infinite;
+            left: -150px;
+            animation: sidneyMove 10s linear infinite;
         }
 
-        @keyframes moveSidney {
-            0%, 100% { transform: translateX(-80%) scaleX(1); }
-            50% { transform: translateX(20%) scaleX(1); }
+        @keyframes sidneyMove {
+            from { left: -150px; }
+            to { left: 110%; }
         }
 
-        /* Caixa de Informações */
+        /* Seção 3: Confirmação (Final da Roda) */
+        .section-rsvp {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: #000;
+        }
+
         .info-box {
-            background: rgba(0, 0, 0, 0.85);
-            border-left: 10px solid #5cb85c;
-            padding: 25px;
-            border-radius: 5px;
-            box-shadow: 10px 10px 0px rgba(0,0,0,0.5);
-        }
-
-        .details p {
-            font-size: 1.2rem;
-            margin: 10px 0;
-            text-transform: uppercase;
-        }
-
-        .details strong {
-            color: #5cb85c;
-        }
-
-        /* Botões */
-        .actions {
-            margin-top: 25px;
+            background: rgba(20, 20, 20, 0.9);
+            border: 3px solid #5cb85c;
+            padding: 40px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(92, 184, 92, 0.3);
         }
 
         .btn {
             display: block;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 18px;
+            margin: 15px 0;
             text-decoration: none;
             font-weight: bold;
             color: white;
             border-radius: 4px;
-            transition: all 0.2s ease;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            border: none;
-            cursor: pointer;
+            font-size: 1.1rem;
+            transition: 0.3s;
         }
 
-        .rsvp { background-color: #25D366; } /* WhatsApp */
-        .maps { background-color: #4285F4; } /* Google Maps */
+        .rsvp { background-color: #25D366; }
+        .maps { background-color: #4285F4; }
 
-        .btn:hover {
-            transform: scale(1.03);
-            filter: brightness(1.2);
+        .btn:hover { transform: scale(1.05); filter: brightness(1.1); }
+
+        /* Animações */
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+            40% {transform: translateY(-10px);}
+            60% {transform: translateY(-5px);}
         }
-
-        .btn:active {
-            transform: scale(0.98);
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
     </style>
 </head>
 <body>
 
-    <div class="overlay"></div>
+    <section class="section-hero">
+        <h1 class="logo-gta">Grand <span>Theft</span> Luana</h1>
+        <h2 style="color: #f1c40f;">LOADED: 100%</h2>
+        <div class="scroll-indicator">▼ ROLE PARA INICIAR A MISSÃO ▼</div>
+    </section>
 
-    <main class="container">
-        <header>
-            <h1 class="logo-gta">Grand <span>Theft</span> Luana</h1>
-            <h2 class="mission-title">MISSÃO: ANIVERSÁRIO 2026</h2>
-        </header>
-
-        <div class="character-section">
-            <img src="https://www.pngplay.com/wp-content/uploads/12/Grand-Theft-Auto-San-Andreas-CJ-PNG-Images-HD.png" alt="Sidney GTA" class="sidney-walk">
+    <section class="section-characters">
+        <h2 style="font-size: 2.5rem;">SQUAD AIRSOFT</h2>
+        <div class="airsoft-gallery">
+            <div class="char-card">
+                <img src="https://www.pngplay.com/wp-content/uploads/12/Grand-Theft-Auto-V-Michael-De-Santa-PNG-Photos.png" alt="Michael Airsoft">
+                <p>MICHAEL: SNIPER</p>
+            </div>
+            <div class="char-card">
+                <img src="https://www.pngplay.com/wp-content/uploads/12/Grand-Theft-Auto-V-Franklin-Clinton-PNG-Images-HD.png" alt="Franklin Airsoft">
+                <p>FRANKLIN: ASSAULT</p>
+            </div>
         </div>
 
-        <section class="info-box">
-            <div class="details">
-                <p><strong>OBJETIVO:</strong> SOBREVIVER À FESTA</p>
-                <p><strong>LOCAL:</strong> ARENA AIRSOFT / RUA EXEMPLO, 123</p>
-                <p><strong>DATA:</strong> 25 DE ABRIL</p>
-                <p><strong>HORÁRIO:</strong> 19:00h</p>
+        <div class="sidney-container">
+            <img src="https://www.pngplay.com/wp-content/uploads/12/Grand-Theft-Auto-San-Andreas-CJ-PNG-Images-HD.png" class="sidney-walk" alt="Sidney Walking">
+        </div>
+        <p style="color: #888; margin-top: 10px;">"QUASE LÁ... CONTINUE ROLANDO"</p>
+    </section>
+
+    <section class="section-rsvp">
+        <div class="info-box">
+            <h2 style="color: #5cb85c; font-size: 2.5rem; margin-bottom: 20px;">MISSÃO FINAL</h2>
+            <div style="font-size: 1.3rem; margin-bottom: 30px; text-align: left;">
+                <p>📍 <strong>LOCAL:</strong> ARENA AIRSOFT CENTRAL</p>
+                <p>📅 <strong>DATA:</strong> 25/04/2026</p>
+                <p>⏰ <strong>HORÁRIO:</strong> 19:00h</p>
             </div>
 
-            <div class="actions">
-                <a href="https://wa.me/5585988606841?text=Missão%20Confirmada!%20Estarei%20lá." class="btn rsvp">
-                    ACEITAR MISSÃO (WhatsApp)
-                </a>
-                
-                <a href="hhttps://maps.app.goo.gl/tgo2Dw3BRT2HHj4u5" target="_blank" class="btn maps">
-                    VER LOCALIZAÇÃO (GPS)
-                </a>
-            </div>
-        </section>
-    </main>
+            <a href="https://wa.me/5585999999999?text=Missão%20Confirmada!%20Operador%20se%20apresentando." class="btn rsvp">
+                CONFIRMAR PRESENÇA
+            </a>
+            
+            <a href="https://maps.google.com" target="_blank" class="btn maps">
+                VER COORDENADAS (MAPS)
+            </a>
+        </div>
+    </section>
 
-    <script>
-        // Pequeno script para tocar um som de "Missão Cumprida" pode ser adicionado aqui futuramente!
-        document.querySelector('.rsvp').addEventListener('click', function() {
-            console.log("Confirmando presença...");
-        });
-    </script>
 </body>
 </html>
